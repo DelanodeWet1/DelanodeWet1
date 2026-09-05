@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}BuyThings - Product Catalogue{% endblock %}
+{% block content %}
+<h1 class="mb-4">🏪 Product Catalogue</h1>
+
+{% if error %}
+    <div class="alert alert-bt-error" role="alert">{{ error }}</div>
+{% endif %}
+
+{% if products %}
+    <div class="table-responsive">
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Store</th>
+                    <th>Available Stock</th>
+                    <th>Price</th>
+                    {% if perms.eCommerce.buy_products%}
+                        <th>Add to Cart</th>
+                    {% endif %}  
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'eCommerce:product_detail' pk=product.pk %}">
+                                {{ product.name }}
+                            </a>
+                        </td>
+                        <td>{{ product.description }}</td>
+                        <td>{{ product.store }}</td>
+                        <td>{{ product.stock }}</td>
+                        <td>R{{ product.price }}</td>
+                        {% if perms.eCommerce.buy_products%}
+                            <td>
+                                <form method="POST" action="{% url 'eCommerce:add_to_cart' %}" class="d-flex gap-2">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="product_id" value="{{ product.pk }}">
+                                    <input type="number" name="quantity" value="1" min="1" max=product.stock class="form-control form-control-sm" style="width: 70px;">
+                                    <button type="submit" class="btn btn-sm btn-bt-primary">Add</button>
+                                </form>
+                            </td>
+                        {% endif %}   
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <p>No products available.</p>
+{% endif %}
+
+<div class="d-flex flex-wrap gap-2 mt-4">
+    {% if perms.eCommerce.buy_products%}
+        <a href="{% url 'eCommerce:main_cart_page' %}" class="btn btn-outline-secondary">🛒 View Cart</a>
+    {% endif %}
+    <a href="{% url 'eCommerce:product_page' %}" class="btn btn-outline-secondary">🔍 Search Product</a>
+    {% if perms.eCommerce.buy_products%}
+        <form method="POST" action="{% url 'eCommerce:clear_cart' %}" class="d-inline m-0">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger">🗑️ Clear Cart</button>
+        </form>
+    {% endif %}
+</div>
+
+<div class="mt-3">
+    <a href="{% url 'grabsomore:welcome' %}" class="btn btn-outline-secondary">Back Home</a>
+</div>
+{% endblock %}

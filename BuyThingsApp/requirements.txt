@@ -1,0 +1,14 @@
+asgiref==3.9.1
+certifi==2026.7.22
+charset-normalizer==3.5.1
+Django==5.2.4
+djangorestframework==3.18.0
+dotenv==0.9.9
+environ==1.0
+idna==3.19
+mysqlclient==2.2.7
+python-dotenv==1.2.3
+requests==2.34.2
+sqlparse==0.5.3
+tzdata==2025.2
+urllib3==2.7.0

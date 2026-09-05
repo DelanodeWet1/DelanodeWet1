@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}BuyThings - {{ product.name }}{% endblock %}
+{% block content %}
+{% if error %}
+    <div class="alert alert-bt-error" role="alert">{{ error }}</div>
+{% endif %}
+
+<div class="card bt-card shadow-sm p-4 mb-4">
+    <h2>{{ product.name }}</h2>
+    <p class="text-muted">{{ product.description }}</p>
+    <p><strong>Store:</strong> {{ product.store }}</p>
+    <p><strong>Quantity available:</strong> {{ product.stock }}</p>
+    <p class="fs-4 fw-semibold">R {{ product.price }}</p>
+
+    <div class="d-flex flex-wrap gap-2 mt-3">
+        <a href="{% url 'eCommerce:products_list' %}" class="btn btn-outline-secondary">Back to Catalog</a>
+        {% if request.user == product.store.vendor %}
+            <a href="{% url 'eCommerce:product_update' pk=product.pk %}" class="btn btn-bt-primary">Edit Product</a>
+            <a href="{% url 'eCommerce:product_delete' pk=product.pk %}" class="btn btn-outline-danger">Delete Product</a>
+        {% endif %}
+        {% if perms.eCommerce.add_reviews%}
+            <a href="{% url 'eCommerce:review_create' pk=product.pk %}" class="btn btn-bt-accent">Review Product</a>
+        {% endif %}
+    </div>
+</div>
+
+<h3 class="mb-3">Reviews</h3>
+{% if reviews %}
+    <div class="row g-3">
+        {% for review in reviews %}
+        <div class="col-md-6">
+            <div class="card bt-card h-100 p-3">
+                <p class="mb-1 fw-semibold">{{ review.title }}</p>
+                <p class="mb-2">{{ review.body }}</p>
+                <p class="mb-2">{{ review.rating }} / 5</p>
+                <p class="mb-1 text-muted">By {{ review.author }}</p>
+                <p class="mb-2">
+                    {% if review.verified %}
+                        <span class="badge bg-success">✔ Verified</span>
+                    {% else %}
+                        <span class="badge bg-secondary">Unverified</span>
+                    {% endif %}
+                </p>
+
+                {% if request.user == review.author %}
+                <div class="d-flex gap-2">
+                    <a href="{% url 'eCommerce:review_update' pk=review.pk %}" class="btn btn-sm btn-bt-primary">Edit Review</a>
+                    <a href="{% url 'eCommerce:review_delete' pk=review.pk %}" class="btn btn-sm btn-outline-danger">Delete Review</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No reviews yet. Be the first to review {{ product.name }}!</p>
+{% endif %}
+{% endblock %}

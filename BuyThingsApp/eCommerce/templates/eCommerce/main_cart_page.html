@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}BuyThings - Your Cart{% endblock %}
+{% block content %}
+<h1 class="mb-4">🛒 Your Shopping Cart</h1>
+
+{% if cart %}
+    <div class="table-responsive">
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Product Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.product.description }}</td>
+                        <td>R{{ item.product.price }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>R{{ item.subtotal }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <p class="mb-1"><strong>Total Items:</strong> {{ cart|length }}</p>
+    <p class="fs-5"><strong>Total Price:</strong> R{{ total_price }}</p>
+{% else %}
+    <p>Your cart is empty.</p>
+{% endif %}
+
+<div class="d-flex flex-wrap gap-2 mt-4">
+    <a href="{% url 'eCommerce:products_list' %}" class="btn btn-bt-primary">🏪 Continue Shopping</a>
+    <a href="{% url 'eCommerce:product_page' %}" class="btn btn-outline-secondary">🔍 Search Product</a>
+
+    <form method="POST" action="{% url 'eCommerce:check_out' %}" class="d-inline m-0">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-bt-accent">Check Out</button>
+    </form>
+
+    <form method="POST" action="{% url 'eCommerce:clear_cart' %}" class="d-inline m-0">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-danger">🗑️ Clear Cart</button>
+    </form>
+</div>
+{% endblock %}

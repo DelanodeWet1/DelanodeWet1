@@ -1,0 +1,7 @@
+Access and Data Security
+
+Access to the BuyThings webpage will be controlled by user authentication. Users will be required to log in and tracked by Django's built in session framework. The users will be required to log in again if they close the webpage, as that will be one of the triggers to end the end a session.
+
+The user log in will establish whether a registered user is a vendor or buyer, with assigned permissions being used to control what web pages and functions the user has access to. Vendors can create, edit, update and delete stores and products. Buys can view products, add them to a cart, check out and buy products as well as leave reviews for products. If a buyer attempts to perform a function they are not authorised to perform, such as adding a store, an error will be returned and an error page will be displayed. The same is true for a vendor account attempting to add items to their cart.
+
+The passwords of users will be hashed. Django hashes passwords by default. All other data stored in the database will be encrypted and securely decrypted for display to authenticated users with the required permissions only.

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}BuyThings - {{ store.name }}{% endblock %}
+{% block content %}
+{% if error %}
+    <div class="alert alert-bt-error" role="alert">{{ error }}</div>
+{% endif %}
+
+<div class="card bt-card shadow-sm p-4 mb-4">
+    <h2>{{ store.name }}</h2>
+    <p class="text-muted">{{ store.description }}</p>
+
+    <div class="d-flex flex-wrap gap-2 mt-3">
+        <a href="{% url 'eCommerce:store_list' %}" class="btn btn-outline-secondary">Back to Store Catalog</a>
+        {% if request.user == store.vendor %}
+            <a href="{% url 'eCommerce:store_update' pk=store.pk %}" class="btn btn-bt-primary">Edit Store</a>
+            <a href="{% url 'eCommerce:store_delete' pk=store.pk %}" class="btn btn-outline-danger">Delete Store</a>
+            <a href="{% url 'eCommerce:product_create' pk=store.pk %}" class="btn btn-bt-accent">Add Product</a>
+        {% endif %}
+    </div>
+</div>
+
+<h3 class="mb-3">Products</h3>
+{% if products %}
+    <div class="row g-3">
+        {% for product in products %}
+        <div class="col-md-4">
+            <div class="card bt-card h-100 p-3">
+                <p class="fw-semibold mb-1">{{ product.name }}</p>
+                <p class="text-muted small mb-2">{{ product.description }}</p>
+                <p class="mb-1">R{{ product.price }}</p>
+                <p class="mb-0 text-muted small">Qty: {{ product.stock }}</p>
+                <!--If the logged-in user is the owner and has permission, then they can edit and delete their products-->
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No products yet.</p>
+{% endif %}
+{% endblock %}

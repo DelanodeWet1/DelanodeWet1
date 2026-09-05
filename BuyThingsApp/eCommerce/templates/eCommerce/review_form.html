@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}BuyThings - {% if form.instance.pk %}Edit{% else %}Create{% endif %} Review{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card bt-card shadow-sm p-4">
+            {% if error %}
+                <div class="alert alert-bt-error" role="alert">{{ error }}</div>
+            {% endif %}
+            <h2 class="mb-4">{% if form.instance.pk %}Edit Review{% else %}Create Review{% endif %}</h2>
+            <form method="post" action="{% if form.instance.pk %}{% url 'eCommerce:review_update' pk=form.instance.pk %}{% else %}{% url 'eCommerce:review_create' pk=product.pk %}{% endif %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-bt-primary">Save</button>
+            </form>
+        </div>
+        <a href="{% url 'eCommerce:product_detail' pk=product.pk %}" class="btn btn-outline-secondary mt-3">Back to Product Page</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,104 @@
+:root {
+    --bt-blue: #2f6fa8;
+    --bt-blue-dark: #204d78;
+    --bt-blue-light: #eaf4fc;
+    --bt-yellow: #ffc845;
+    --bt-yellow-dark: #e0a91d;
+    --bt-white: #ffffff;
+    --bt-text: #24303d;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bt-white);
+    color: var(--bt-text);
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+h1, h2, h3, h4, .navbar-brand {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Header */
+.bt-header {
+    background-color: var(--bt-blue);
+}
+.bt-header .navbar-brand,
+.bt-header .nav-link {
+    color: var(--bt-yellow) !important;
+    font-weight: 600;
+}
+.bt-header .nav-link:hover {
+    color: var(--bt-white) !important;
+}
+.bt-header .navbar-toggler {
+    border-color: var(--bt-yellow);
+}
+.bt-header .navbar-toggler-icon {
+    filter: invert(85%) sepia(55%) saturate(500%) hue-rotate(1deg);
+}
+
+/* Signature wavy divider between header and page content */
+.bt-wave {
+    display: block;
+    width: 100%;
+    line-height: 0;
+}
+.bt-wave svg {
+    width: 100%;
+    height: 20px;
+    display: block;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+/* Footer */
+.bt-footer {
+    background-color: var(--bt-blue);
+    color: var(--bt-yellow);
+}
+.bt-footer a {
+    color: var(--bt-yellow);
+}
+
+/* Buttons */
+.btn-bt-primary {
+    background-color: var(--bt-blue);
+    border-color: var(--bt-blue);
+    color: var(--bt-white);
+}
+.btn-bt-primary:hover {
+    background-color: var(--bt-blue-dark);
+    border-color: var(--bt-blue-dark);
+    color: var(--bt-white);
+}
+.btn-bt-accent {
+    background-color: var(--bt-yellow);
+    border-color: var(--bt-yellow-dark);
+    color: var(--bt-blue-dark);
+    font-weight: 600;
+}
+.btn-bt-accent:hover {
+    background-color: var(--bt-yellow-dark);
+    color: var(--bt-blue-dark);
+}
+
+.bt-card {
+    border: 1px solid var(--bt-blue-light);
+    border-radius: 0.75rem;
+}
+
+.alert-bt-error {
+    background-color: #fdecea;
+    border: 1px solid #f5c2c0;
+    color: #9c2f2a;
+    border-radius: 0.5rem;
+}

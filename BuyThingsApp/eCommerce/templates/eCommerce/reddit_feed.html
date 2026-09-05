@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}R/Python{% endblock %}
+{% block content %}
+{% if error %}
+    <div class="alert alert-bt-error" role="alert">{{ error }}</div>
+{% endif %}
+
+<body>
+    <h1>R/Python Posts:</h1>
+    <ul> {% for post in posts %} <li> <strong>{{ post.title }}</strong><br> by {{ post.author }}<br> <a
+                href="{{ post.url }}" target="_blank">View Post</a> </li> {% endfor %} </ul>
+</body>
+{% endblock %}
